@@ -4,6 +4,8 @@
  */
 package prjbank2;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author L14Y09W14
@@ -110,7 +112,11 @@ public class AddAccount extends javax.swing.JFrame {
         Double balance = Double.parseDouble(tfBalance.getText());
         
         Account acc = new Account(accNumber, username, balance);
-        conn.addAccount(acc);
+        if(conn.addAccount(acc)){
+            JOptionPane.showMessageDialog(this, "Account added successfully");
+        } else {
+            JOptionPane.showMessageDialog(this, "Adding account was unsuccessful");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

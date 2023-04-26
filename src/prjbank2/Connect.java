@@ -19,7 +19,7 @@ public class Connect {
     public Connect(){
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/uybank","root","");
-            //JOptionPane.showMessageDialog(null, "Connected");
+//            JOptionPane.showMessageDialog(null, "Connected");
         } catch (SQLException ex) {
             Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,12 +56,19 @@ public class Connect {
         ResultSet rs;
         try {
             stmt=conn.createStatement();
-            sql ="select * from user where username='"+username+"' and password='"+password+"'";
+            sql ="select * from user where username='"+username+"' and password='"+password+"' and userType=1";
             rs = stmt.executeQuery(sql);
             if (rs.next()==true)
-                return 1;
-            else
-                return 0;
+                return 2;
+            else {
+                sql ="select * from user where username='"+username+"' and password='"+password+"'";
+                rs = stmt.executeQuery(sql);
+                if(rs.next()==true) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -81,12 +88,9 @@ public class Connect {
               Account a = new Account(rs.getString(1),rs.getDouble(2)) ;
               acc.add(a);
             }
-            
-            
         } catch (SQLException ex) {
             Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return acc;
     }
     
@@ -103,12 +107,9 @@ public class Connect {
               Verification v = new Verification(rs.getString(1),rs.getString(2), rs.getDouble(3), rs.getString(4));
               ver.add(v);
             }
-            
-            
         } catch (SQLException ex) {
             Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return ver;
     }
     
@@ -146,8 +147,29 @@ public class Connect {
             stmt = conn.createStatement();
             sql = "SELECT * FROM user WHERE username='" + account.getUsername() + "'";
             rs = stmt.executeQuery(sql);
-            if(!rs.next()) {
+            if(rs.next()) {
                 sql = "INSERT INTO account VALUES('" + account.getAccountNumber() +  "', " + account.getBalance() + ", '" + account.getUsername() + "')";
+                stmt.executeUpdate(sql);
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean transferBalance(Account account1, String accNumber, double balance) {
+        Statement stmt;
+        String sql;
+        ResultSet rs;
+        try {
+            stmt = conn.createStatement();
+            sql = "SELECT * FROM account WHERE accountnumber='" + accNumber + "'";
+            rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+                sql = "UPDATE account SET balance=" + rs.getDouble(2) + "+" + balance + " WHERE accountnumber='" + accNumber + "'";
+                stmt.executeUpdate(sql);
+                sql = "UPDATE account SET balance=(SELECT balance FROM account WHERE accountnumber='" + account1.getAccountNumber() + "') - " + balance + " WHERE accountnumber='" + account1.getAccountNumber() + "'";
                 stmt.executeUpdate(sql);
                 return true;
             }

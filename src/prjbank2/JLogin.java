@@ -4,6 +4,7 @@
  */
 package prjbank2;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,7 +17,7 @@ public class JLogin extends javax.swing.JFrame {
      * Creates new form JLogin
      */
     Connect conn;
-    JMain mainGui;
+    JFrame mainGui;
     public JLogin() {
         initComponents();
         conn = new Connect();
@@ -115,6 +116,11 @@ public class JLogin extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int result=conn.login(jUsername.getText(), jPassword.getText());
+        
+        if(result==2) {
+            mainGui = new JMain2();
+            mainGui.show();
+        }
        if (result== 1){
            mainGui = new JMain(jUsername.getText());
             mainGui.show();

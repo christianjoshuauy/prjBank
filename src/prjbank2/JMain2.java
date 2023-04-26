@@ -23,18 +23,12 @@ public class JMain2 extends javax.swing.JFrame {
         tbl = (DefaultTableModel) jTable1.getModel();
         conn = new Connect();
        displayTable();
-       /* String data[]= {"1","2000"};
-        tbl.addRow(data);
-        String data2[]= {"2","5000"};
-        tbl.addRow(data2);
-        */
-       
     }
 
     public void displayTable(){
         ArrayList<Verification> ver = conn.displayVerification();
         for(Verification v : ver){
-            String data[]={v.getCustomerUsername(), v.getAccountNumber(), Double.toString(v.getAmount()), v.getTypeOfTransaction() };
+            String data[]={ v.getCustomerUsername(), v.getAccountNumber(), Double.toString(v.getAmount()), v.getTypeOfTransaction() };
             tbl.addRow(data);
         }
     }
@@ -54,17 +48,14 @@ public class JMain2 extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Customer Username", "Account Number", "Amount", "Type of Transaction"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {

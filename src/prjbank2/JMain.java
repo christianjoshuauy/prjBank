@@ -5,6 +5,7 @@
 package prjbank2;
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -63,6 +64,7 @@ public class JMain extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButtonDelete = new javax.swing.JButton();
+        btnBalanceTransfer = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,6 +132,13 @@ public class JMain extends javax.swing.JFrame {
             }
         });
 
+        btnBalanceTransfer.setText("Balance Transfer");
+        btnBalanceTransfer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBalanceTransferActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,6 +162,10 @@ public class JMain extends javax.swing.JFrame {
                                 .addComponent(jButtonDelete))
                             .addComponent(jBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(150, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBalanceTransfer)
+                .addGap(172, 172, 172))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +187,9 @@ public class JMain extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnBalanceTransfer)
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
         pack();
@@ -216,6 +231,12 @@ public class JMain extends javax.swing.JFrame {
         conn.deleteAccount(acc);
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
+    private void btnBalanceTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBalanceTransferActionPerformed
+        // TODO add your handling code here:
+        JFrame frame = new BalanceTransfer(this.username);
+        frame.setVisible(true);
+    }//GEN-LAST:event_btnBalanceTransferActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,6 +274,7 @@ public class JMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBalanceTransfer;
     private javax.swing.JTextField jAccountNumber;
     private javax.swing.JTextField jBalance;
     private javax.swing.JButton jButtonDelete;
